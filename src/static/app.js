@@ -14,6 +14,22 @@ document.addEventListener("DOMContentLoaded", () => {
       activitiesList.innerHTML = "";
 
       // Populate activities list
+      // Helper function to escape HTML
+      function escapeHTML(str) {
+        return str.replace(/[&<>"'`=\/]/g, function (s) {
+          return ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '`': '&#96;',
+            '=': '&#61;',
+            '/': '&#47;'
+          })[s];
+        });
+      }
+
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
@@ -27,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="participants-section">
               <strong>Participants:</strong>
               <ul class="participants-list">
-                ${details.participants.map(email => `<li>${email}</li>`).join("")}
+                ${details.participants.map(email => `<li>${escapeHTML(email)}</li>`).join("")}
               </ul>
             </div>
           `;
